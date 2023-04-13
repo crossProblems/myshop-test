@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax_login</title>
+</head>
+<body>
+{{ form_obj.as_p }}
+{% csrf_token %}
+<button id="submit">提交</button>
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script>
+    $("#submit").click(function(){
+        $.ajax({
+            url:"/ajax_login_data/",
+            type:"POST",
+            data:{
+                username: $("#id_username").val(),
+                password: $("#id_password").val(),
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+            },
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (jqXHR, textStatus, err){
+                console.log(arguments);
+            },
+        })
+    })
+</script>
+</body>
+</html>
